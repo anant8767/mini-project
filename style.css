@@ -10,8 +10,11 @@
   51%, 100% { border-color: #facc15; }
 }
 
+body{
+  position: relative;
+}
+
 #home{
-    height: 90vh;
-    position: relative;
-    left: 100px;
+  height: 100vh;
+  padding-left: 100px;
 }
