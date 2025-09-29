@@ -1,0 +1,16 @@
+/* Custom styles if needed */
+.typing {
+  border-right: 2px solid #facc15; /* yellow cursor effect */
+  padding-right: 4px;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { border-color: transparent; }
+  51%, 100% { border-color: #facc15; }
+}
+
+
+#home{
+    height: 90vh;
+}
