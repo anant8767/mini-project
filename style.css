@@ -14,7 +14,15 @@ body{
   position: relative;
 }
 
+#changing-text{
+  font-family: 'Akaya Telivigala', cursive;;
+}
+
 #home{
   height: 100vh;
   padding-left: 100px;
+}
+
+body {
+    font-family: 'Sora', sans-serif;
 }
