@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GECA CSE Department</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Shapes Background -->
+    <div class="floating-shapes">
+        <canvas id="bg-canvas"></canvas>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-contact">
+                    <span><i class="fas fa-phone"></i> +91-240-1234567</span>
+                    <span><i class="fas fa-envelope"></i> cse@geca.ac.in</span>
+                </div>
+                <div class="header-links">
+                    <a href="#">Sitemap</a> | <a href="/login page/login.html">Login/Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header-main">
+                <div class="logo">
+                    <img src="/main page/compsa.png" alt="GECA Logo">
+                    <div class="logo-text">
+                        <h1>COMPSA</h1>
+                        <p>Government College of Engineering, Aurangabad</p>
+                    </div>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li>
+                            <a href="#">About <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="#">Department Overview</a></li>
+                                <li><a href="#">Vision & Mission</a></li>
+                                <li><a href="#">Infrastructure</a></li>
+                                <li><a href="#">Awards & Achievements</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Academics <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="#">B.Tech Program</a></li>
+                                <li><a href="#">M.Tech Program</a></li>
+                                <li><a href="#">Syllabus</a></li>
+                                <li><a href="#">Academic Calendar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Faculty</a></li>
+                        <li><a href="#">Research</a></li>
+                        <li><a href="#">Students</a></li>
+                        <li><a href="#">Placements</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with 3D Globe -->
+    <section class="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <h2>Department of Computer Science & Engineering</h2>
+            <p>Empowering students with cutting-edge knowledge and skills in computer science to become future leaders in technology and innovation.</p>
+            <a href="#" class="btn">Explore Programs</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About the Department</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>The Department of Computer Science and Engineering at Government College of Engineering, Aurangabad was established in 1986 with the vision to provide quality education in the field of computer science and engineering.</p>
+                    <p>Our department offers B.Tech and M.Tech programs that are designed to equip students with the theoretical foundation and practical skills needed to excel in the rapidly evolving field of computer science.</p>
+                    <p>With state-of-the-art laboratories, experienced faculty, and strong industry connections, we strive to create an environment that fosters innovation, research, and holistic development of our students.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="CSE Department">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="programs">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <div class="program-cards">
+                <div class="program-card">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="B.Tech Program">
+                    <div class="program-card-content">
+                        <h3>B.Tech in Computer Science & Engineering</h3>
+                        <p>A four-year undergraduate program that provides comprehensive knowledge in computer science fundamentals, software development, and emerging technologies.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="M.Tech Program">
+                    <div class="program-card-content">
+                        <h3>M.Tech in Computer Science & Engineering</h3>
+                        <p>A two-year postgraduate program with specializations in Artificial Intelligence, Data Science, and Cyber Security, focusing on advanced research and development.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="PhD Program">
+                    <div class="program-card-content">
+                        <h3>PhD in Computer Science & Engineering</h3>
+                        <p>A research-oriented program that enables scholars to contribute to the advancement of knowledge in various domains of computer science through innovative research.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section id="faculty">
+        <div class="container">
+            <h2 class="section-title">Our Faculty</h2>
+            <div class="faculty-container">
+                <div class="faculty-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&q=80" alt="Dr. Rajesh Sharma" class="faculty-img">
+                    <h3>Dr. Rajesh Sharma</h3>
+                    <p>Professor & Head of Department</p>
+                    <p>PhD in Computer Science, IIT Delhi</p>
+                    <p>Specialization: Artificial Intelligence</p>
+                </div>
+                <div class="faculty-card">
+                    <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&q=80" alt="Dr. Priya Patel" class="faculty-img">
+                    <h3>Dr. Priya Patel</h3>
+                    <p>Associate Professor</p>
+                    <p>PhD in Computer Science, NIT Surathkal</p>
+                    <p>Specialization: Data Science</p>
+                </div>
+                <div class="faculty-card">
+                    <img src="https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=656&q=80" alt="Dr. Amit Kumar" class="faculty-img">
+                    <h3>Dr. Amit Kumar</h3>
+                    <p>Assistant Professor</p>
+                    <p>PhD in Computer Science, BITS Pilani</p>
+                    <p>Specialization: Cyber Security</p>
+                </div>
+                <div class="faculty-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=634&q=80" alt="Dr. Sneha Deshmukh" class="faculty-img">
+                    <h3>Dr. Sneha Deshmukh</h3>
+                    <p>Assistant Professor</p>
+                    <p>PhD in Computer Science, Pune University</p>
+                    <p>Specialization: Machine Learning</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn">View All Faculty</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research" class="programs">
+        <div class="container">
+            <h2 class="section-title">Research & Innovation</h2>
+            <div class="research-highlights">
+                <div class="research-item">
+                    <h3>Artificial Intelligence & Machine Learning</h3>
+                    <p>Our researchers are working on cutting-edge AI algorithms, natural language processing, and computer vision applications with real-world impact.</p>
+                </div>
+                <div class="research-item">
+                    <h3>Data Science & Big Data Analytics</h3>
+                    <p>We focus on developing novel techniques for processing, analyzing, and deriving insights from large-scale datasets across various domains.</p>
+                </div>
+                <div class="research-item">
+                    <h3>Cyber Security & Blockchain</h3>
+                    <p>Research in secure systems, cryptography, and blockchain technology to address emerging challenges in digital security.</p>
+                </div>
+                <div class="research-item">
+                    <h3>Internet of Things (IoT)</h3>
+                    <p>Developing smart systems and applications that leverage IoT for healthcare, agriculture, and smart city solutions.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn">Explore Research Areas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Events Section -->
+    <section id="news">
+        <div class="container">
+            <h2 class="section-title">News & Events</h2>
+            <div class="news-container">
+                <div class="news-item">
+                    <div class="news-date">June 15, 2023</div>
+                    <div class="news-content">
+                        <h3>GECA CSE Students Win National Hackathon</h3>
+                        <p>A team of four CSE students secured first place in the National Level Hackathon organized by TechGig, developing an innovative AI-based solution for agricultural problems.</p>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">May 28, 2023</div>
+                    <div class="news-content">
+                        <h3>International Conference on AI & ML</h3>
+                        <p>The department is organizing an international conference on Artificial Intelligence and Machine Learning from August 10-12, 2023. Call for papers is now open.</p>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">April 10, 2023</div>
+                    <div class="news-content">
+                        <h3>MoU Signed with Leading Tech Company</h3>
+                        <p>GECA CSE Department signed a Memorandum of Understanding with TechSolutions Inc. for collaborative research, internships, and placement opportunities.</p>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn">View All News</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="programs">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Address</h3>
+                            <p>Government College of Engineering,<br>Station Road, Aurangabad,<br>Maharashtra - 431005</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>+91-240-1234567<br>+91-240-1234568</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p>cse@geca.ac.in<br>hod_cse@geca.ac.in</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Department</a></li>
+                        <li><a href="#">Academic Programs</a></li>
+                        <li><a href="#">Faculty</a></li>
+                        <li><a href="#">Research</a></li>
+                        <li><a href="#">Placements</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Academic Programs</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">B.Tech in CSE</a></li>
+                        <li><a href="#">M.Tech in CSE</a></li>
+                        <li><a href="#">PhD Program</a></li>
+                        <li><a href="#">Syllabus</a></li>
+                        <li><a href="#">Academic Calendar</a></li>
+                        <li><a href="#">Admissions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Information</h3>
+                    <p>Government College of Engineering,<br>Station Road, Aurangabad,<br>Maharashtra - 431005</p>
+                    <p>Phone: +91-240-1234567</p>
+                    <p>Email: cse@geca.ac.in</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Government College of Engineering, Aurangabad - CSE Department. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
