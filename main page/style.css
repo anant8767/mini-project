@@ -7,6 +7,11 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        html {
+        scroll-behavior: smooth;
+        }
+
+
         :root {
             --primary-color: #003366;
             --secondary-color: #cc0000;
