@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students - COMPSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --light: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+        }
+
+        .bg-animation canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        header.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-bar {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-size: 0.85rem;
+        }
+
+        .top-bar a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .top-bar a:hover {
+            color: var(--primary);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .compsa-wrapper {
+        max-width: 950px;
+        margin: 40px auto;
+        margin-top: 120px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.07); /* translucent */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .compsa-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 5px;
+    }
+
+    .compsa-subtitle {
+        text-align: center;
+        font-size: 18px;
+        color: #d0d0d0;
+        margin-bottom: 20px;
+    }
+
+    .compsa-table-container {
+        overflow-x: auto;
+    }
+
+    table.compsa-table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #e8e8e8;
+        font-family: Arial, sans-serif;
+    }
+
+    table.compsa-table th,
+    table.compsa-table td {
+        padding: 12px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        vertical-align: top;
+    }
+
+    table.compsa-table th {
+        background: rgba(255, 255, 255, 0.12);
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    table.compsa-table tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 20px 80px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15), transparent 70%);
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            color: var(--gray);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Achievements Grid */
+
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 100px;
+        }
+
+        .achievement-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .achievement-img {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .achievement-content {
+            padding: 30px;
+        }
+
+        .achievement-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .achievement-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .achievement-content p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .achievement-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* ===== STUDENT DIRECTORY SECTION ===== */
+        
+        /* Directory Controls */
+        .directory-controls {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+        }
+
+        .search-bar-wrapper {
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-bar input::placeholder {
+            color: var(--gray);
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1.2rem;
+        }
+
+        /* Filter Section */
+        .filters-section {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .filter-select option {
+            background: var(--dark-light);
+            color: #fff;
+        }
+
+        /* Results Counter */
+        .results-info {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .results-info strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Student Directory Grid */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .student-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .student-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .student-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 30px 20px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .student-avatar {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .student-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .student-program {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .student-body {
+            padding: 20px;
+        }
+
+        .student-info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .student-info-row i {
+            width: 20px;
+            color: var(--primary);
+        }
+
+        .student-interests {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .student-interests p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .no-results h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .no-results p {
+            font-size: 1.1rem;
+        }
+
+        /* ===== END STUDENT DIRECTORY ===== */
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 6rem;
+            color: rgba(99, 102, 241, 0.2);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .testimonial-text {
+            position: relative;
+            z-index: 1;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-img {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Resources Section */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .resource-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .resource-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .resource-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .resource-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.7), rgba(236, 72, 153, 0.7));
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 1;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s;
+            z-index: 2;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .gallery-overlay p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 60px 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cards-grid,
+            .achievements-grid,
+            .testimonials-grid,
+            .resources-grid,
+            .gallery-grid,
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-section {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <canvas id="bgCanvas"></canvas>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div>
+                    <i class="fas fa-phone"></i> +91-240-1234567 | 
+                    <i class="fas fa-envelope"></i> cse@geca.ac.in
+                </div>
+                <div>
+                    <a href="#"><i class="fas fa-user"></i> Login</a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="/student_page.html" class="active">Students</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="compsa-wrapper">
+    <div class="compsa-title">COMPSA Committee For 2025–26</div>
+    <div class="compsa-subtitle">Department of Computer Science & Engineering</div>
+
+    <div class="compsa-table-container">
+        <table class="compsa-table">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Post</th>
+                    <th>Name of Student</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>General Secretary (GS)</td><td>Animesh Yadav</td></tr>
+                <tr><td>2</td><td>Co-General Secretary</td><td>Bhushan Hage</td></tr>
+                <tr><td>3</td><td>President</td><td>Vaishnavi Sagar</td></tr>
+                <tr><td>4</td><td>Treasurer</td><td>Prathamesh Pathade</td></tr>
+                <tr><td>5</td><td>Cultural Secretary</td><td>Shraddha Gawari</td></tr>
+                <tr><td>6</td><td>Sports Secretary</td><td>Aditya GujarKar</td></tr>
+
+                <tr>
+                    <td>7</td>
+                    <td>Technical Head</td>
+                    <td>
+                        1. Shreyas Deshmukh<br>
+                        2. Anshul Meshram
+                    </td>
+                </tr>
+
+                <tr><td>8</td><td>Digital Head</td><td>Pranay Mutyalwar</td></tr>
+                <tr><td>9</td><td>Alumni Connect Head</td><td>Yatish Badgujar</td></tr>
+                <tr><td>10</td><td>Vice-President</td><td>Swayam Lanjewar</td></tr>
+                <tr><td>11</td><td>Joint-Treasurer</td><td>Rugved Aney</td></tr>
+                <tr><td>12</td><td>Joint-Cultural Secretary</td><td>Gayatri Dabare</td></tr>
+                <tr><td>13</td><td>Joint-Sports Secretary</td><td>Rohit Band</td></tr>
+                <tr><td>14</td><td>Joint-Technical</td><td>Om Bagade</td></tr>
+
+                <tr>
+                    <td>15</td>
+                    <td>Joint-Alumni Connect</td>
+                    <td>
+                        1. Vedant Bawaskar<br>
+                        2. Nishay Kshirsagar<br>
+                        3. Mayuri Futane<br>
+                        4. Yashraj Patil<br>
+                        5. Snehal Soni
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <!-- ====== STUDENT DIRECTORY SECTION ====== -->
+    <section id="student-directory">
+        <div class="container">
+            <h2 class="section-title">Student Directory</h2>
+            <p class="section-subtitle">Connect with our talented CSE students</p>
+
+            <!-- Directory Controls -->
+            <div class="directory-controls">
+                <!-- Search Bar -->
+                <div class="search-bar-wrapper">
+                    <div class="search-bar">
+                        <input 
+                            type="text" 
+                            id="studentSearch" 
+                            placeholder="Search by name, program, or year..."
+                            autocomplete="off"
+                        >
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <label for="yearFilter">Year</label>
+                        <select id="yearFilter" class="filter-select">
+                            <option value="all">All Years</option>
+                            <option value="1st">1st Year</option>
+                            <option value="2nd">2nd Year</option>
+                            <option value="3rd">3rd Year</option>
+                            <option value="4th">4th Year</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="programFilter">Program</label>
+                        <select id="programFilter" class="filter-select">
+                            <option value="all">All Programs</option>
+                            <option value="B.Tech">B.Tech</option>
+                            <option value="M.Tech">M.Tech</option>
+                            <option value="PhD">PhD</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sortFilter">Sort By</label>
+                        <select id="sortFilter" class="filter-select">
+                            <option value="name-asc">Name (A-Z)</option>
+                            <option value="name-desc">Name (Z-A)</option>
+                            <option value="year-asc">Year (Ascending)</option>
+                            <option value="year-desc">Year (Descending)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Results Info -->
+                <div class="results-info">
+                    Showing <strong id="resultsCount">12</strong> student(s) from CSE Department
+                </div>
+            </div>
+
+            <!-- Students Grid -->
+            <div class="students-grid" id="studentsGrid">
+                <!-- Student cards will be dynamically populated -->
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults">
+                <i class="fas fa-user-slash"></i>
+                <h3>No Students Found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </section>
+    <!-- ====== END STUDENT DIRECTORY ====== -->
+
+    <!-- Achievements -->
+    <section id="achievements">
+        <div class="container">
+            <h2 class="section-title">Student Achievements</h2>
+            <p class="section-subtitle">Celebrating excellence and innovation</p>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-img">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-badge">Hackathon</span>
+                        <h3>Smart India Hackathon 2024</h3>
+                        <p>Team "TechNova" won 1st prize for developing an AI-powered waste management system</p>
+                        <div class="achievement-meta">
+                            <span><i class="fas fa-calendar"></i> March 2024</span>
+                            <span><i class="fas fa-map-marker-alt"></i> National Level</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-img">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-badge">Competition</span>
+                        <h3>ACM ICPC Regional Finals</h3>
+                        <p>Secured 15th rank among 200+ teams in competitive programming championship</p>
+                        <div class="achievement-meta">
+                            <span><i class="fas fa-calendar"></i> December 2023</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Regional</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-img">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-badge">Research</span>
+                        <h3>IEEE Paper Publication</h3>
+                        <p>Research paper on "Deep Learning for Medical Image Analysis" accepted at IEEE conference</p>
+                        <div class="achievement-meta">
+                            <span><i class="fas fa-calendar"></i> January 2024</span>
+                            <span><i class="fas fa-map-marker-alt"></i> International</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-img">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-badge">Innovation</span>
+                        <h3>Patent Filed</h3>
+                        <p>Student project on "Smart Agriculture IoT System" filed for patent under faculty guidance</p>
+                        <div class="achievement-meta">
+                            <span><i class="fas fa-calendar"></i> February 2024</span>
+                            <span><i class="fas fa-map-marker-alt"></i> National</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-img">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-badge">Open Source</span>
+                        <h3>Google Summer of Code</h3>
+                        <p>Three students selected for GSoC 2024, contributing to major open-source projects</p>
+                        <div class="achievement-meta">
+                            <span><i class="fas fa-calendar"></i> May 2024</span>
+                            <span><i class="fas fa-map-marker-alt"></i> International</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-img">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-badge">AI Competition</span>
+                        <h3>Kaggle Competition Winner</h3>
+                        <p>Top 50 finish in Kaggle's ML competition with 5000+ participants worldwide</p>
+                        <div class="achievement-meta">
+                            <span><i class="fas fa-calendar"></i> April 2024</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Global</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Student Voices</h2>
+            <p class="section-subtitle">Hear from our amazing students</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "The department provided me with countless opportunities to explore my interests in AI and machine learning. The supportive faculty and collaborative environment helped me secure my dream internship at Google."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-img">AR</div>
+                        <div class="author-info">
+                            <h4>Ananya Reddy</h4>
+                            <p>B.Tech Final Year • Google Intern</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Participating in hackathons and coding competitions organized by our department clubs transformed me from a beginner to a confident developer. The peer learning culture here is exceptional."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-img">RK</div>
+                        <div class="author-info">
+                            <h4>Rohan Kulkarni</h4>
+                            <p>B.Tech Third Year • ACM ICPC Finalist</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "The research opportunities and mentorship from faculty members helped me publish my first paper. The department's focus on innovation and practical learning prepared me well for higher studies."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-img">SK</div>
+                        <div class="author-info">
+                            <h4>Sneha Khanna</h4>
+                            <p>M.Tech Second Year • Research Scholar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Being part of the Cyber Security Club opened doors I never imagined. From CTF competitions to industry workshops, every experience has been invaluable in shaping my career path."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-img">VM</div>
+                        <div class="author-info">
+                            <h4>Vikram Mehta</h4>
+                            <p>B.Tech Final Year • Cybersecurity Enthusiast</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "The collaborative projects and industry exposure through guest lectures gave me real-world insights. The department's emphasis on both theory and practice is its greatest strength."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-img">PS</div>
+                        <div class="author-info">
+                            <h4>Priya Sharma</h4>
+                            <p>B.Tech Third Year • App Developer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section id="resources">
+        <div class="container">
+            <h2 class="section-title">Student Resources</h2>
+            <p class="section-subtitle">Everything you need at your fingertips</p>
+            <div class="resources-grid">
+                <div class="resource-card resource-card1">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Syllabus</h3>
+                    <p>Download curriculum & course details</p>
+                </div>
+
+                <div class="resource-card resource-card2">
+                    <div class="resource-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Academic Calendar</h3>
+                    <p>View semester schedules & events</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Notices</h3>
+                    <p>Important announcements & updates</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Time Table</h3>
+                    <p>Class schedules & lab timings</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Study Materials</h3>
+                    <p>Lecture notes & reference books</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Previous Papers</h3>
+                    <p>Question banks & solutions</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Lab Manuals</h3>
+                    <p>Practical experiment guides</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Project Ideas</h3>
+                    <p>Inspiration for your projects</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Campus Life Gallery</h2>
+            <p class="section-subtitle">Moments that define our journey</p>
+            <div class="gallery-grid">
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                    <div class="gallery-overlay">
+                        <h4>Annual Tech Fest</h4>
+                        <p>Students showcasing innovations</p>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--secondary), var(--accent));">
+                    <div class="gallery-overlay">
+                        <h4>Coding Workshop</h4>
+                        <p>Hands-on learning session</p>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--accent), var(--primary));">
+                    <div class="gallery-overlay">
+                        <h4>Hackathon 2024</h4>
+                        <p>48 hours of innovation</p>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--primary), var(--accent));">
+                    <div class="gallery-overlay">
+                        <h4>Project Exhibition</h4>
+                        <p>Final year presentations</p>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--secondary), var(--primary));">
+                    <div class="gallery-overlay">
+                        <h4>Guest Lecture</h4>
+                        <p>Industry expert session</p>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--accent), var(--secondary));">
+                    <div class="gallery-overlay">
+                        <h4>Club Activities</h4>
+                        <p>Weekly meetups & events</p>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--accent), var(--secondary));">
+                    <div class="gallery-overlay">
+                        <h4>Club Activities</h4>
+                        <p>Weekly meetups & events</p>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, var(--accent), var(--secondary));">
+                    <div class="gallery-overlay">
+                        <h4>Club Activities</h4>
+                        <p>Weekly meetups & events</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#about">About Department</a></li>
+                        <li><a href="#programs">Academic Programs</a></li>
+                        <li><a href="#faculty">Faculty</a></li>
+                        <li><a href="#research">Research</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>For Students</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Student Portal</a></li>
+                        <li><a href="#clubs">Clubs & Committees</a></li>
+                        <li><a href="#resources">Resources</a></li>
+                        <li><a href="#achievements">Achievements</a></li>
+                        <li><a href="#student-directory">Student Directory</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Library</a></li>
+                        <li><a href="#">Labs</a></li>
+                        <li><a href="#">Research Papers</a></li>
+                        <li><a href="#">Syllabus</a></li>
+                        <li><a href="placements.html">Placements</a></li>
+                        <li><a href="#">Alumni</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect With Us</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;">Stay connected through our social channels</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 COMPSA - Government College of Engineering, Aurangabad. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ====== STUDENT DIRECTORY DATA AND FUNCTIONALITY ======
+        
+        // Sample student data (12 students from CSE Department only)
+        const studentsData = [
+            {
+                name: "Siddesh Bavaskar",
+                year: "3rd",
+                program: "B.Tech",
+                email: "ishita.mehta@geca.ac.in",
+                interests: "IoT Systems, Embedded Programming, and Smart City Solutions"
+            },
+            {
+                name: "Subham Savita Sanjay",
+                year: "2nd",
+                program: "M.Tech",
+                email: "sanya.gupta@geca.ac.in",
+                interests: "Game Development with Unity and Augmented Reality"
+            },
+            {
+                name: "Vaibhav Mokale",
+                year: "2nd",
+                program: "M.Tech",
+                email: "aditya.iyer@geca.ac.in",
+                interests: "Blockchain Technology, Distributed Systems, and Smart Contracts"
+            },
+            {
+        "name": "Raghav Dhananjay Abhyankar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "raghav.abhyankar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Aditya Khamkar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "aditya.khamkar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Rugved Vivek Aney",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "rugved.aney@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Om Praful Bagade",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "om.bagade@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sudhanshu Sudhir Bagade",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sudhanshu.bagade@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Chaitanya Manik Bakhal",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "chaitanya.bakhal@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sanskriti Kanhayalal Bankar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sanskriti.bankar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Vedant Bharatrao Bavaskar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "vedant.bavaskar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Aadarsh Ashok Charpe",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "aadarsh.charpe@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Vivek Ganeshrao Chaudhari",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "vivek.chaudhari@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Amaan Salim Choudhari",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "amaan.choudhari@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Vishakha Sudhakar Choudhari",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "vishakha.choudhari@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Yadvi Maheshkumar Choudhari",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "yadvi.choudhari@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Vedant Manohar Dakare",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "vedant.dakare@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sanika Sunil Deshmukh",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sanika.deshmukh@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sarthak Anil Deshmukh",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sarthak.deshmukh@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Suhani Atulrao Deshmukh",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "suhani.deshmukh@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Shreya Sanjay Dosi",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "shreya.dosi@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Krutarath Gorakshnath Fulare",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "krutarath.fulare@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Mayuri Santosh Futane",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "mayuri.futane@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Arihant Kashinath Gadge",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "arihant.gadge@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Divya Bhagwan Ingle",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "divya.ingle@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sagar Sitaram Jadhav",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sagar.jadhav@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Shamal Damodhar Jadhav",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "shamal.jadhav@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Prabhat Anand Jha",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "prabhat.jha@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Soham Laxmikant Joshi",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "soham.joshi@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sharad Madhukar Kahale",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sharad.kahale@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Rohit Vijay Kamdi",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "rohit.kamdi@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Anisha Anil Kate",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "anisha.kate@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Rucha Kiran Kawale",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "rucha.kawale@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Om Arun Kayande",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "om.kayande@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Yuvraj Annasaheb Khoje",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "yuvraj.khoje@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Tanmay Sanjay Kolhe",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "tanmay.kolhe@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Nishchay Lachhiram Kshirsagar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "nishchay.kshirsagar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Janki Govind Kulkarni",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "janki.kulkarni@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Akshada Balasaheb Mane",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "akshada.mane@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Mansi Sanjay Mhaske",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "mansi.mhaske@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Meeran Mohd Kaleem Mohd",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "meeran.mohd@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sanvi Rahul Mulay",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sanvi.mulay@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sheetal Ashok Nimbarte",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sheetal.nimbarte@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Dnyaneshwari Sunil Pandhare",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "dnyaneshwari.pandhare@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Tanvi Vishal Pardeshi",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "tanvi.pardeshi@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Atharv Raju Pathak",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "atharv.pathak@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Yashraj Vitthal Patil",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "yashraj.patil@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Pawan Dattaram Pawar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "pawan.pawar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Asha Suryakant Pote",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "asha.pote@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Yash Raju Rajput",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "yash.rajput@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Rohit Kumar Sanjay Band",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "rohit.band@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Amruta Keshav Rothe",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "amruta.rothe@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Riya Bhushan Sali",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "riya.sali@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sameer Dumne",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sameer.dumne@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Anushka Bhaskar Satpute",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "anushka.satpute@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Adarsh Shivbardan Singh",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "adarsh.singh@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Snehal Shamsunder Soni",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "snehal.soni@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Maaz Syed Mazhar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "maaz.syed@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Kapil Ravindra Tekam",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "kapil.tekam@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sarthak Chandrakant Thakare",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sarthak.thakare@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Harshwardhan Ashokkumar Tiwari",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "harshwardhan.tiwari@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Chetan Vijay Tupe",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "chetan.tupe@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Shraddha Dilip Ujgare",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "shraddha.ujgare@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Mangesh Anil Wagh",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "mangesh.wagh@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Anjali Sanjay Wakalkar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "anjali.wakalkar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Mayur Chandrakant Wakchaure",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "mayur.wakchaure@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Anant Avinash Joshi",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "anant.joshi@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Pankaj Ramdas Karpe",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "pankaj.karpe@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Rohan Santosh Pawar",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "rohan.pawar@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Jayesh Sanjay Donge",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "jayesh.donge@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Vedika Sudhir Gawande",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "vedika.gawande@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Anushka Rajendra Kharat",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "anushka.kharat@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Sayli Shriram Machave",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "sayli.machave@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Laxmikant Sonawane Om",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "laxmikant.sonawane@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Pratiksha Sudhakar Gavhad",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "pratiksha.gavhad@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Anushka Navneet Sukhadeve",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "anushka.sukhadeve@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    },
+    {
+        "name": "Prajkta Pradeeprao Vaidya",
+        "year": "2nd",
+        "program": "B.Tech",
+        "email": "prajakta.vaidya@geca.ac.in",
+        "interests": "Software Engineering, DevOps, and Cloud Architecture"
+    }
+            
+        ];
+
+        // Function to get initials from name
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase();
+        }
+
+        // Function to create student card HTML
+        function createStudentCard(student) {
+            return `
+                <div class="student-card" data-name="${student.name.toLowerCase()}" data-year="${student.year}" data-program="${student.program}">
+                    <div class="student-header">
+                        <div class="student-avatar">${getInitials(student.name)}</div>
+                        <h3 class="student-name">${student.name}</h3>
+                        <p class="student-program">${student.program} - ${student.year} Year</p>
+                    </div>
+                    <div class="student-body">
+                        <div class="student-info-row">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>${student.program}</span>
+                        </div>
+                        <div class="student-info-row">
+                            <i class="fas fa-calendar"></i>
+                            <span>${student.year} Year</span>
+                        </div>
+                        <div class="student-info-row">
+                            <i class="fas fa-envelope"></i>
+                            <span>${student.email}</span>
+                        </div>
+                        <div class="student-interests">
+                            <p>${student.interests}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to render students
+        function renderStudents(students) {
+            const grid = document.getElementById('studentsGrid');
+            const noResults = document.getElementById('noResults');
+            const resultsCount = document.getElementById('resultsCount');
+
+            if (students.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.add('show');
+                resultsCount.textContent = '0';
+            } else {
+                grid.innerHTML = students.map(student => createStudentCard(student)).join('');
+                noResults.classList.remove('show');
+                resultsCount.textContent = students.length;
+            }
+        }
+
+        // Function to filter and sort students
+        function filterAndSortStudents() {
+            const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
+            const yearFilter = document.getElementById('yearFilter').value;
+            const programFilter = document.getElementById('programFilter').value;
+            const sortOption = document.getElementById('sortFilter').value;
+
+            let filtered = studentsData.filter(student => {
+                // Search filter
+                const matchesSearch = student.name.toLowerCase().includes(searchTerm) ||
+                                    student.program.toLowerCase().includes(searchTerm) ||
+                                    student.year.toLowerCase().includes(searchTerm) ||
+                                    student.email.toLowerCase().includes(searchTerm);
+
+                // Year filter
+                const matchesYear = yearFilter === 'all' || student.year === yearFilter;
+
+                // Program filter
+                const matchesProgram = programFilter === 'all' || student.program === programFilter;
+
+                return matchesSearch && matchesYear && matchesProgram;
+            });
+
+            // Sort
+            filtered.sort((a, b) => {
+                switch(sortOption) {
+                    case 'name-asc':
+                        return a.name.localeCompare(b.name);
+                    case 'name-desc':
+                        return b.name.localeCompare(a.name);
+                    case 'year-asc':
+                        return parseInt(a.year) - parseInt(b.year);
+                    case 'year-desc':
+                        return parseInt(b.year) - parseInt(a.year);
+                    default:
+                        return 0;
+                }
+            });
+
+            renderStudents(filtered);
+        }
+
+        // Event listeners for search and filters
+        document.getElementById('studentSearch').addEventListener('input', filterAndSortStudents);
+        document.getElementById('yearFilter').addEventListener('change', filterAndSortStudents);
+        document.getElementById('programFilter').addEventListener('change', filterAndSortStudents);
+        document.getElementById('sortFilter').addEventListener('change', filterAndSortStudents);
+
+        // Initial render
+        renderStudents(studentsData);
+
+        // ====== END STUDENT DIRECTORY FUNCTIONALITY ======
+
+        // Animated Background Canvas
+        const bgCanvas = document.getElementById('bgCanvas');
+        const ctx = bgCanvas.getContext('2d');
+        
+        bgCanvas.width = window.innerWidth;
+        bgCanvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * bgCanvas.width;
+                this.y = Math.random() * bgCanvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > bgCanvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > bgCanvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(99, 102, 241, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.2 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .achievement-card, .testimonial-card, .resource-card, .gallery-item, .student-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'rgba(15, 23, 42, 0.98)';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderTop = '1px solid rgba(255, 255, 255, 0.1)';
+            });
+        }
+
+        document.querySelectorAll(".resource-card1").forEach(card => {
+            card.addEventListener("click", () => {
+                window.open("https://geca.ac.in/pdf/curriculum/UG/cse/F.Y.B.Tech__CSE_Syllabus_w.e.f._A.Y._2023-2024_Updated-1%20(1).pdf", "_blank");
+            });
+        });
+
+
+        document.querySelectorAll(".resource-card2").forEach(card => {
+            card.addEventListener("click", () => {
+                window.open("https://geca.ac.in/downloads/291220240902Academic%20Calendar%20%20from%201%20Jan%202025_15%20Jan%2025%20Even%20FY_SY_TY_Final%20UG_SY%20PG.pdf", "_blank");
+            });
+        });
+
+    </script>
+</body>
+</html>
+        

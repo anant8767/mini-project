@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COMPSA - Computer Science & Engineering</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary: #8b5cf6;
+        --accent: #ec4899;
+        --dark: #0f172a;
+        --dark-light: #1e293b;
+        --gray: #64748b;
+        --light: #f1f5f9;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--dark);
+        color: #fff;
+        overflow-x: hidden;
+      }
+
+      /* Animated Background */
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(
+          135deg,
+          var(--dark) 0%,
+          var(--dark-light) 100%
+        );
+      }
+
+      .bg-animation canvas {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Header */
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+      }
+
+      header.scrolled {
+        background: rgba(15, 23, 42, 0.95);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .top-bar {
+        background: rgba(99, 102, 241, 0.1);
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+      }
+
+      .top-bar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        font-size: 0.85rem;
+      }
+
+      .top-bar a {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .top-bar a:hover {
+        color: var(--primary);
+      }
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .logo-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden; /* ensures image doesn't overflow the circle */
+      }
+
+      .logo-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* makes the image cover the container while maintaining aspect ratio */
+      }
+
+      .logo-text h1 {
+        font-size: 1.5rem;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .logo-text p {
+        font-size: 0.75rem;
+        color: var(--gray);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        transition: width 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Hero Section with Carousel */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 150px 20px 80px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(99, 102, 241, 0.1),
+          transparent 70%
+        );
+      }
+
+      .hero-content {
+        width: 100%;
+        max-width: 1400px;
+        z-index: 1;
+      }
+
+      /* Carousel Container */
+      .flipkart-carousel {
+        position: relative;
+        width: 100%;
+        margin: 0 auto 50px;
+      }
+
+      .carousel-track-container {
+        overflow: hidden;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .carousel-card {
+        min-width: 100%;
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        opacity: 0.7;
+        transform: scale(0.95);
+        transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+      }
+
+      .carousel-card.active {
+        opacity: 1;
+        transform: scale(1);
+        border-color: var(--primary);
+        box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+      }
+
+      .carousel-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.1),
+          rgba(236, 72, 153, 0.1)
+        );
+        opacity: 0;
+        transition: opacity 0.4s;
+        pointer-events: none;
+      }
+
+      .carousel-card.active::before {
+        opacity: 1;
+      }
+
+      .card-image {
+        flex: 0 0 45%;
+        height: 400px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .card-image::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(30, 41, 59, 0.9) 100%
+        );
+      }
+
+      .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      .carousel-card:hover .card-image img {
+        transform: scale(1.1);
+      }
+
+      .card-content {
+        flex: 1;
+        padding: 50px 60px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .card-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+      }
+
+      .card-content h3 {
+        font-size: 2.2rem;
+        color: #fff;
+        margin-bottom: 15px;
+        line-height: 1.3;
+        font-weight: 700;
+      }
+
+      .card-content p {
+        font-size: 1.1rem;
+        color: var(--gray);
+        margin-bottom: 30px;
+        line-height: 1.6;
+      }
+
+      .card-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 35px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card-btn::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .card-btn:hover::before {
+        width: 350px;
+        height: 350px;
+      }
+
+      .card-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(99, 102, 241, 0.5);
+      }
+
+      .card-btn i {
+        transition: transform 0.4s ease;
+      }
+
+      .card-btn:hover i {
+        transform: translateX(5px);
+      }
+
+      /* Navigation Arrows */
+      .flipkart-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background: rgba(99, 102, 241, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 50%;
+        color: #fff;
+        font-size: 1.3rem;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .flipkart-prev {
+        left: -25px;
+      }
+
+      .flipkart-next {
+        right: -25px;
+      }
+
+      .flipkart-arrow:hover {
+        background: var(--primary);
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+      }
+
+      /* Pagination Dots */
+      .flipkart-pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .pagination-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(99, 102, 241, 0.3);
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border: 2px solid rgba(99, 102, 241, 0.5);
+      }
+
+      .pagination-dot:hover {
+        background: rgba(99, 102, 241, 0.6);
+        transform: scale(1.3);
+      }
+
+      .pagination-dot.active {
+        background: var(--primary);
+        width: 35px;
+        border-radius: 10px;
+        border-color: var(--primary);
+        box-shadow: 0 2px 15px rgba(99, 102, 241, 0.6);
+      }
+
+      /* Hero Headline */
+      .hero-headline {
+        text-align: center;
+        color: white;
+        margin-top: 60px;
+      }
+
+      .hero-headline h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #fff, var(--primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-headline p {
+        font-size: 1.2rem;
+        color: var(--gray);
+      }
+
+      /* Section Styles */
+      section {
+        padding: 100px 20px;
+        position: relative;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, var(--primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: var(--gray);
+        font-size: 1.2rem;
+        margin-bottom: 60px;
+      }
+
+      /* Cards Grid */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .card {
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 20px;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.1),
+          rgba(236, 72, 153, 0.1)
+        );
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+      }
+
+      .card:hover::before {
+        opacity: 1;
+      }
+
+      .card-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .card p {
+        color: var(--gray);
+        line-height: 1.8;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Stats Section */
+      .stats {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        padding: 80px 20px;
+        margin: 100px 0;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        text-align: center;
+      }
+
+      .stat-item h3 {
+        font-size: 3.5rem;
+        margin-bottom: 10px;
+      }
+
+      .stat-item p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      /* Faculty Section */
+      .faculty-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .faculty-card {
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s;
+      }
+
+      .faculty-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+      }
+
+      .faculty-img1 {
+        width: 100%;
+        height: 200px; /* adjust as needed */
+        background-image: url('/img.png');
+        background-size: cover; /* makes it cover the div */
+        background-position: center; /* centers the image */
+        border-radius: 8px; /* optional rounded corners */
+      }
+
+      .faculty-img2 {
+        width: 100%;
+        height: 200px; /* adjust as needed */
+        background-image: url('/img2.png');
+        background-size: cover; /* makes it cover the div */
+        background-position: center; /* centers the image */
+        border-radius: 8px; /* optional rounded corners */
+      }
+
+      .faculty-img {
+        width: 100%;
+        height: 200px; /* adjust as needed */
+
+        background-position: center; /* centers the image */
+        border-radius: 8px; /* optional rounded corners */
+      }
+
+
+      .faculty-info {
+        padding: 30px;
+      }
+
+      .faculty-info h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+      }
+
+      .faculty-info p {
+        color: var(--gray);
+        margin-bottom: 8px;
+      }
+
+      .faculty-info .role {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      /* News Section */
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .news-card {
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s;
+      }
+
+      .news-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+      }
+
+      .news-date {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        padding: 15px 25px;
+        font-weight: 600;
+      }
+
+      .news-content {
+        padding: 30px;
+      }
+
+      .news-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+      }
+
+      .news-content p {
+        color: var(--gray);
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .news-content a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+
+      .news-content a:hover {
+        color: var(--accent);
+      }
+
+      /* Contact Section */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        margin-top: 50px;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .contact-item {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
+      .contact-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .contact-item h4 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+
+      .contact-item p {
+        color: var(--gray);
+        line-height: 1.6;
+      }
+
+      .contact-form {
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 20px;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 15px;
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+      }
+
+      .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .btn {
+        padding: 15px 40px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #fff;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+      }
+
+      /* Footer */
+      footer {
+        background: rgba(15, 23, 42, 0.8);
+        padding: 60px 20px 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .footer-column h4 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: var(--gray);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-links a {
+        width: 45px;
+        height: 45px;
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        transition: all 0.3s;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+      }
+
+      .social-links a:hover {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        transform: translateY(-3px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--gray);
+      }
+
+      /* Responsive */
+      @media (max-width: 1200px) {
+        .flipkart-carousel {
+          width: 85%;
+        }
+
+        .card-content {
+          padding: 40px 50px;
+        }
+
+        .card-content h3 {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .flipkart-carousel {
+          width: 90%;
+        }
+
+        .carousel-card {
+          flex-direction: column;
+        }
+
+        .card-image {
+          flex: 0 0 auto;
+          width: 100%;
+          height: 250px;
+        }
+
+        .card-image::after {
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(30, 41, 59, 0.95) 100%
+          );
+        }
+
+        .card-content {
+          padding: 30px 40px;
+        }
+
+        .card-content h3 {
+          font-size: 1.8rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .flipkart-carousel {
+          width: 95%;
+        }
+
+        .hero-headline h1 {
+          font-size: 2rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cards-grid,
+        .faculty-grid,
+        .news-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flipkart-prev {
+          left: 10px;
+        }
+
+        .flipkart-next {
+          right: 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .flipkart-carousel {
+          width: 100%;
+        }
+
+        .carousel-track-container {
+          border-radius: 15px;
+        }
+
+        .card-content {
+          padding: 25px 30px;
+        }
+
+        .card-badge {
+          font-size: 0.75rem;
+          padding: 6px 15px;
+        }
+
+        .card-content h3 {
+          font-size: 1.5rem;
+        }
+
+        .card-content p {
+          font-size: 1rem;
+        }
+
+        .card-btn {
+          padding: 12px 28px;
+          font-size: 0.95rem;
+        }
+
+        .flipkart-arrow {
+          width: 40px;
+          height: 40px;
+          font-size: 1rem;
+        }
+      }
+
+      .profile-menu button {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 35px;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  min-width: 150px;
+  z-index: 10;
+}
+
+#dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+#dropdown-menu a:hover {
+  background: #f2f2f2;
+}
+
+    /* 🔸 Profile Button */
+.profile-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  transition: 0.2s;
+}
+.profile-btn:hover {
+  color: #ffb74d;
+}
+
+/* 🔸 Dropdown Menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 35px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 50;
+  animation: fadeIn 0.25s ease;
+}
+.dropdown-link {
+  display: block;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.dropdown-link:hover {
+  background: #f5f5f5;
+}
+.logout-link {
+  color: #d9534f;
+}
+
+/* 🔸 Profile Card Popup */
+.profile-card-popup {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 75px;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  color: #222;
+  z-index: 60;
+  animation: slideDown 0.25s ease-out;
+}
+
+/* 🔹 Card Header */
+.profile-header {
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding-bottom: 12px;
+  margin-bottom: 10px;
+}
+.profile-icon {
+  font-size: 60px;
+  color: #ff9800;
+}
+.profile-header h3 {
+  margin: 8px 0 2px;
+  font-size: 18px;
+}
+.profile-subtitle {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 🔹 Profile Info */
+.profile-info {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.profile-info strong {
+  color: #000;
+}
+
+/* ✨ Animations */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+    </style>
+  </head>
+  <body>
+    <div class="bg-animation">
+      <canvas id="bgCanvas"></canvas>
+    </div>
+
+    <header id="header">
+      <div class="top-bar">
+        <div class="container">
+          <div>
+            <i class="fas fa-phone"></i> +91-240-1234567 |
+            <i class="fas fa-envelope"></i> cse@geca.ac.in
+          </div>
+          <div id="user-section">
+            <a href="/login-page/login.html" id="login-link">
+              <i class="fas fa-user"></i> Login
+            </a>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <div class="logo">
+          <div class="logo-icon">
+            <img src="/compsa.png" alt="" />
+          </div>
+          <div class="logo-text">
+            <h1>COMPSA</h1>
+            <p>GECA Aurangabad</p>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#faculty">Faculty</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="/placement_page.html">Placement</a></li>
+          <li><a href="/student_page.html">Students</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </nav>
+    </header>
+
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <div class="flipkart-carousel">
+          <div class="carousel-track-container">
+            <div class="carousel-track">
+              <div class="carousel-card active">
+                <div class="card-image">
+                  <img
+                    src="/geca.png"
+                    alt="Welcome"
+                  />
+                </div>
+                <div class="card-content">
+                  <span class="card-badge">Welcome</span>
+                  <h3>Department of Computer Science & Engineering</h3>
+                  <p>
+                    Shaping the future with innovation and excellence since 1986
+                  </p>
+                  <a href="#about" class="card-btn"
+                    >Explore More <i class="fas fa-arrow-right"></i
+                  ></a>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <div class="card-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Laboratories"
+                  />
+                </div>
+                <div class="card-content">
+                  <span class="card-badge">Facilities</span>
+                  <h3>State-of-the-Art Labs</h3>
+                  <p>AI, ML, Cloud Computing & IoT research facilities</p>
+                  <a href="#programs" class="card-btn"
+                    >View Labs <i class="fas fa-arrow-right"></i
+                  ></a>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <div class="card-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Research"
+                  />
+                </div>
+                <div class="card-content">
+                  <span class="card-badge">Research</span>
+                  <h3>Cutting-Edge Research</h3>
+                  <p>
+                    Leading innovations in AI, Data Science & Cyber Security
+                  </p>
+                  <a href="#research" class="card-btn"
+                    >Our Research <i class="fas fa-arrow-right"></i
+                  ></a>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <div class="card-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Placements"
+                  />
+                </div>
+                <div class="card-content">
+                  <span class="card-badge">Placements</span>
+                  <h3>Top Recruiters</h3>
+                  <p>...</p>
+                  <a href="#" class="card-btn"
+                    >View Stats <i class="fas fa-arrow-right"></i
+                  ></a>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <div class="card-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Programs"
+                  />
+                </div>
+                <div class="card-content">
+                  <span class="card-badge">Admissions</span>
+                  <h3>Join Our Community</h3>
+                  <p>B.Tech, M.Tech & PhD programs available</p>
+                  <a href="#programs" class="card-btn"
+                    >Apply Now <i class="fas fa-arrow-right"></i
+                  ></a>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <div class="card-image">
+                  <img
+                    src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Events"
+                  />
+                </div>
+                <div class="card-content">
+                  <span class="card-badge">Events</span>
+                  <h3>Hackathons & Workshops</h3>
+                  <p>Regular tech events, seminars & industry sessions</p>
+                  <a href="#news" class="card-btn"
+                    >See Events <i class="fas fa-arrow-right"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="flipkart-arrow flipkart-prev" aria-label="Previous">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="flipkart-arrow flipkart-next" aria-label="Next">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+
+          <div class="flipkart-pagination">
+            <span class="pagination-dot active" data-index="0"></span>
+            <span class="pagination-dot" data-index="1"></span>
+            <span class="pagination-dot" data-index="2"></span>
+            <span class="pagination-dot" data-index="3"></span>
+            <span class="pagination-dot" data-index="4"></span>
+            <span class="pagination-dot" data-index="5"></span>
+          </div>
+        </div>
+
+        <div class="hero-headline">
+          <h1>Empowering Future Tech Leaders</h1>
+          <p>
+            Excellence in Education • Innovation in Research • Leaders in
+            Technology
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About the Department</h2>
+        <p class="section-subtitle">
+          Excellence in Computer Science Education Since 1986
+        </p>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3>Quality Education</h3>
+            <p>
+              Providing comprehensive B.Tech, M.Tech, and PhD programs designed
+              to equip students with theoretical foundations and practical
+              skills in computer science.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-microscope"></i></div>
+            <h3>Research Excellence</h3>
+            <p>
+              State-of-the-art laboratories and experienced faculty fostering
+              innovation in AI, Data Science, Cyber Security, and emerging
+              technologies.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-building"></i></div>
+            <h3>Industry Connect</h3>
+            <p>
+              Strong partnerships with leading tech companies providing
+              internships, placements, and collaborative research opportunities
+              for students.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <h3>35+</h3>
+            <p>Years of Excellence</p>
+          </div>
+          <div class="stat-item">
+            <h3>300+</h3>
+            <p>Students Enrolled</p>
+          </div>
+          <div class="stat-item">
+            <h3>50+</h3>
+            <p>Expert Faculty</p>
+          </div>
+          <div class="stat-item">
+            <h3>95%</h3>
+            <p>Placement Record</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="programs">
+      <div class="container">
+        <h2 class="section-title">Academic Programs</h2>
+        <p class="section-subtitle">Choose your path to success</p>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+            <h3>B.Tech in CSE</h3>
+            <p>
+              Four-year undergraduate program providing comprehensive knowledge
+              in computer science fundamentals, software development, and
+              emerging technologies.
+            </p>
+            <a href="#" class="btn btn-primary" style="margin-top: 20px"
+              >Learn More</a
+            >
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-brain"></i></div>
+            <h3>M.Tech in CSE</h3>
+            <p>
+              Two-year postgraduate program with specializations in AI, Data
+              Science, and Cyber Security, focusing on advanced research and
+              development.
+            </p>
+            <a href="#" class="btn btn-primary" style="margin-top: 20px"
+              >Learn More</a
+            >
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-flask"></i></div>
+            <h3>PhD Program</h3>
+            <p>
+              Research-oriented program enabling scholars to contribute to the
+              advancement of knowledge through innovative research in various CS
+              domains.
+            </p>
+            <a href="#" class="btn btn-primary" style="margin-top: 20px"
+              >Learn More</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faculty">
+      <div class="container">
+        <h2 class="section-title">Our Faculty</h2>
+        <p class="section-subtitle">
+          Learn from the best minds in computer science
+        </p>
+        <div class="faculty-grid">
+          <div class="faculty-card">
+            <div class="faculty-img1"></div>
+            <div class="faculty-info">
+              <h3>Dr. Vikul Pawar</h3>
+              <p class="role">Professor & Head of Department</p>
+              <p>PhD in Computer Science</p>
+              <p><strong>Specialization:</strong> Computer Science</p>
+            </div>
+          </div>
+          <div class="faculty-card">
+            <div class="faculty-img"></div>
+            <div class="faculty-info">
+              <h3>Vrishali Motewar</h3>
+              <p class="role">Assistant Professor</p>
+              <p>...</p>
+              <p><strong>Specialization:</strong>Computer Science</p>
+            </div>
+          </div>
+          <div class="faculty-card">
+            <div class="faculty-img"></div>
+            <div class="faculty-info">
+              <h3>...</h3>
+              <p class="role">...</p>
+              <p>...</p>
+              <p><strong>Specialization:</strong> ...</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section id="research">
+      <div class="container">
+        <h2 class="section-title">Research & Innovation</h2>
+        <p class="section-subtitle">Pushing the boundaries of technology</p>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-robot"></i></div>
+            <h3>AI & Machine Learning</h3>
+            <p>
+              Cutting-edge research in AI algorithms, natural language
+              processing, and computer vision with real-world applications.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-database"></i></div>
+            <h3>Data Science & Big Data</h3>
+            <p>
+              Novel techniques for processing, analyzing, and deriving insights
+              from large-scale datasets across various domains.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Cyber Security</h3>
+            <p>
+              Research in secure systems, cryptography, and blockchain
+              technology to address emerging security challenges.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+            <h3>Internet of Things</h3>
+            <p>
+              Developing smart systems for healthcare, agriculture, and smart
+              city solutions using IoT technologies.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news">
+      <div class="container">
+        <h2 class="section-title">News & Events</h2>
+        <p class="section-subtitle">Stay updated with latest happenings</p>
+        <div class="news-grid">
+          <div class="news-card">
+            <div class="news-date">June 15, 2023</div>
+            <div class="news-content">
+              <h3>National Hackathon Winners</h3>
+              <p>
+                CSE students secured first place in the National Level
+                Hackathon, developing an innovative AI-based solution for
+                agricultural problems.
+              </p>
+              <a href="#">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-date">May 28, 2023</div>
+            <div class="news-content">
+              <h3>International AI Conference</h3>
+              <p>
+                Department organizing international conference on Artificial
+                Intelligence and Machine Learning from August 10-12, 2023.
+              </p>
+              <a href="#">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-date">April 10, 2023</div>
+            <div class="news-content">
+              <h3>MoU with Tech Industry</h3>
+              <p>
+                Department signed MoU with TechSolutions Inc. for collaborative
+                research, internships, and placement opportunities.
+              </p>
+              <a href="#">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">We'd love to hear from you</p>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div>
+                <h4>Address</h4>
+                <p>
+                  Government College of Engineering<br />Station Road,
+                  Aurangabad<br />Maharashtra - 431005
+                </p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <h4>Phone</h4>
+                <p>+91-240-1234567<br />+91-240-1234568</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <h4>Email</h4>
+                <p>cse@geca.ac.in<br />hod_cse@geca.ac.in</p>
+              </div>
+            </div>
+          </div>
+          <div class="contact-form">
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Enter your name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  placeholder="What's this about?"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  placeholder="Your message here..."
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%">
+                Send Message <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About Department</a></li>
+              <li><a href="#programs">Academic Programs</a></li>
+              <li><a href="#faculty">Faculty</a></li>
+              <li><a href="#research">Research</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Programs</h4>
+            <ul class="footer-links">
+              <li><a href="#">B.Tech in CSE</a></li>
+              <li><a href="#">M.Tech in CSE</a></li>
+              <li><a href="#">PhD Program</a></li>
+              <li><a href="#">Syllabus</a></li>
+              <li><a href="#">Academic Calendar</a></li>
+              <li><a href="#">Admissions</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul class="footer-links">
+              <li><a href="#">Library</a></li>
+              <li><a href="#">Labs</a></li>
+              <li><a href="#">Research Papers</a></li>
+              <li><a href="#">Student Portal</a></li>
+              <li><a href="#">Placements</a></li>
+              <li><a href="#">Alumni</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Connect With Us</h4>
+            <p style="color: var(--gray); margin-bottom: 15px">
+              Stay connected through our social channels
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>
+            &copy; 2025 COMPSA - Government College of Engineering, Aurangabad.
+            All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Animated Background Canvas
+      const bgCanvas = document.getElementById("bgCanvas");
+      const ctx = bgCanvas.getContext("2d");
+
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * bgCanvas.width;
+          this.y = Math.random() * bgCanvas.height;
+          this.vx = (Math.random() - 0.5) * 0.5;
+          this.vy = (Math.random() - 0.5) * 0.5;
+          this.radius = Math.random() * 2;
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+
+          if (this.x < 0 || this.x > bgCanvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > bgCanvas.height) this.vy *= -1;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(99, 102, 241, 0.5)";
+          ctx.fill();
+        }
+      }
+
+      const particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        particles.forEach((particle) => {
+          particle.update();
+          particle.draw();
+        });
+
+        particles.forEach((p1, i) => {
+          particles.slice(i + 1).forEach((p2) => {
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(99, 102, 241, ${
+                0.2 * (1 - distance / 150)
+              })`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          });
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+
+      window.addEventListener("resize", () => {
+        bgCanvas.width = window.innerWidth;
+        bgCanvas.height = window.innerHeight;
+      });
+
+      // Header scroll effect
+      const header = document.getElementById("header");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 100) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      });
+
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Form submission
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert("Thank you for your message! We will get back to you soon.");
+          this.reset();
+        });
+
+      // Mobile menu toggle
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuToggle.addEventListener("click", () => {
+        navLinks.style.display =
+          navLinks.style.display === "flex" ? "none" : "flex";
+        navLinks.style.position = "absolute";
+        navLinks.style.top = "100%";
+        navLinks.style.left = "0";
+        navLinks.style.right = "0";
+        navLinks.style.background = "rgba(15, 23, 42, 0.98)";
+        navLinks.style.flexDirection = "column";
+        navLinks.style.padding = "20px";
+        navLinks.style.borderTop = "1px solid rgba(255, 255, 255, 0.1)";
+      });
+
+      // Intersection Observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".card, .faculty-card, .news-card")
+        .forEach((el) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(30px)";
+          el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          observer.observe(el);
+        });
+
+      // Counter animation for stats
+      const statObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const target = entry.target;
+              const number = target.querySelector("h3");
+              const value = parseInt(number.textContent);
+              let current = 0;
+              const increment = value / 50;
+              const timer = setInterval(() => {
+                current += increment;
+                if (current >= value) {
+                  number.textContent =
+                    value +
+                    (number.textContent.includes("+") ? "+" : "") +
+                    (number.textContent.includes("%") ? "%" : "");
+                  clearInterval(timer);
+                } else {
+                  number.textContent =
+                    Math.floor(current) +
+                    (number.textContent.includes("+") ? "+" : "") +
+                    (number.textContent.includes("%") ? "%" : "");
+                }
+              }, 30);
+              statObserver.unobserve(target);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      document.querySelectorAll(".stat-item").forEach((stat) => {
+        statObserver.observe(stat);
+      });
+
+      // Carousel functionality
+      (function () {
+        const track = document.querySelector(".carousel-track");
+        const cards = Array.from(document.querySelectorAll(".carousel-card"));
+        const prevBtn = document.querySelector(".flipkart-prev");
+        const nextBtn = document.querySelector(".flipkart-next");
+        const dots = Array.from(document.querySelectorAll(".pagination-dot"));
+
+        if (!track || cards.length === 0) return;
+
+        let currentIndex = 0;
+        let autoSlideInterval;
+        const slideDuration = 5000;
+
+        const getCardWidth = () => {
+          return cards[0].offsetWidth;
+        };
+
+        const updateCarousel = (index) => {
+          const cardWidth = getCardWidth();
+          const offset = -index * cardWidth;
+          track.style.transform = `translateX(${offset}px)`;
+
+          cards.forEach((card, i) => {
+            card.classList.toggle("active", i === index);
+          });
+
+          dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === index);
+          });
+        };
+
+        const nextSlide = () => {
+          currentIndex = (currentIndex + 1) % cards.length;
+          updateCarousel(currentIndex);
+        };
+
+        const prevSlide = () => {
+          currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+          updateCarousel(currentIndex);
+        };
+
+        const goToSlide = (index) => {
+          currentIndex = index;
+          updateCarousel(currentIndex);
+        };
+
+        const startAutoSlide = () => {
+          autoSlideInterval = setInterval(nextSlide, slideDuration);
+        };
+
+        const stopAutoSlide = () => {
+          clearInterval(autoSlideInterval);
+        };
+
+        const restartAutoSlide = () => {
+          stopAutoSlide();
+          startAutoSlide();
+        };
+
+        prevBtn.addEventListener("click", () => {
+          prevSlide();
+          restartAutoSlide();
+        });
+
+        nextBtn.addEventListener("click", () => {
+          nextSlide();
+          restartAutoSlide();
+        });
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => {
+            goToSlide(index);
+            restartAutoSlide();
+          });
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") {
+            prevSlide();
+            restartAutoSlide();
+          } else if (e.key === "ArrowRight") {
+            nextSlide();
+            restartAutoSlide();
+          }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const carousel = document.querySelector(".flipkart-carousel");
+
+        carousel.addEventListener(
+          "touchstart",
+          (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoSlide();
+          },
+          { passive: true }
+        );
+
+        carousel.addEventListener(
+          "touchend",
+          (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+              if (diff > 0) {
+                nextSlide();
+              } else {
+                prevSlide();
+              }
+            }
+            restartAutoSlide();
+          },
+          { passive: true }
+        );
+
+        carousel.addEventListener("mouseenter", stopAutoSlide);
+        carousel.addEventListener("mouseleave", startAutoSlide);
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            stopAutoSlide();
+          } else {
+            startAutoSlide();
+          }
+        });
+
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            updateCarousel(currentIndex);
+          }, 250);
+        });
+
+        updateCarousel(0);
+        startAutoSlide();
+      })();
+
+      const userSection = document.getElementById("user-section");
+  const loggedUser = JSON.parse(localStorage.getItem("user"));
+
+  (() => {
+  const userSection = document.getElementById("user-section");
+  if (!userSection) {
+    console.warn("⚠️ user-section not found in DOM");
+    return;
+  }
+
+  const loggedUser = JSON.parse(localStorage.getItem("user") || "null");
+  if (!loggedUser) return; // user not logged in
+
+  // 🔹 Replace login link with dropdown + profile card
+  userSection.innerHTML = `
+    <div class="profile-menu" style="position: relative; display: inline-block;">
+      <button id="profile-btn" class="profile-btn">
+        <i class="fas fa-user-circle"></i> ${loggedUser.name}
+      </button>
+
+      <div id="dropdown-menu" class="dropdown-menu">
+        <a href="#" id="view-profile" class="dropdown-link">👤 View Profile</a>
+        <a href="#" id="logout-btn" class="dropdown-link logout-link">🚪 Logout</a>
+      </div>
+
+      <div id="profile-card" class="profile-card-popup">
+        <div class="profile-header">
+          <i class="fas fa-user-circle profile-icon"></i>
+          <h3>${loggedUser.name}</h3>
+          <p class="profile-subtitle">
+            ${loggedUser.branch.includes("Engineering")
+              ? "Student - GECA Aurangabad"
+              : "Faculty - GECA Aurangabad"}
+          </p>
+        </div>
+        <div class="profile-info">
+          <div><strong>Branch:</strong> ${loggedUser.branch}</div>
+          <div><strong>Year:</strong> ${loggedUser.year}</div>
+          <div><strong>Semester:</strong> ${loggedUser.semester}</div>
+          <div><strong>Roll No:</strong> ${loggedUser.rollno}</div>
+          <div><strong>Mobile:</strong> ${loggedUser.mobile}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // --- Element References ---
+  const profileBtn = document.getElementById("profile-btn");
+  const dropdown = document.getElementById("dropdown-menu");
+  const viewProfile = document.getElementById("view-profile");
+  const logoutBtn = document.getElementById("logout-btn");
+  const profileCard = document.getElementById("profile-card");
+
+  // --- Dropdown toggle ---
+  profileBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+    profileCard.style.display = "none";
+  });
+
+  // --- View Profile toggle ---
+  viewProfile.addEventListener("click", (e) => {
+    e.preventDefault();
+    dropdown.style.display = "none";
+    profileCard.style.display =
+      profileCard.style.display === "block" ? "none" : "block";
+  });
+
+  // --- Logout ---
+  logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("user");
+    alert("Logged out successfully!");
+    location.reload();
+  });
+
+  // --- Close dropdown/profile when clicking outside ---
+  document.addEventListener("click", (e) => {
+    if (!userSection.contains(e.target)) {
+      dropdown.style.display = "none";
+      profileCard.style.display = "none";
+    }
+  });
+})();
+    </script>
+  </body>
+</html>

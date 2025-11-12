@@ -101,6 +101,11 @@
     </style>
 </head>
 <body>
+    <script>
+  if (localStorage.getItem("user")) {
+    window.location.href = "/index.html";
+  }
+</script>
 
     <!-- 3D Animated Background -->
     <canvas id="bg-canvas"></canvas>
@@ -179,42 +184,106 @@
         });
 
         // ========================================
-        // Login / Signup Toggle
-        // ========================================
-        const authBox = document.getElementById('auth-box');
-        const authTitle = document.getElementById('auth-title');
-        const authBtn = document.getElementById('auth-btn');
-        const toggleAuth = document.getElementById('toggle-auth');
-        const authForm = document.getElementById('auth-form');
+  // Login / Signup Toggle
+  // ========================================
+  const authBox = document.getElementById('auth-box');
+  const authTitle = document.getElementById('auth-title');
+  const authBtn = document.getElementById('auth-btn');
+  const toggleAuth = document.getElementById('toggle-auth');
+  const authForm = document.getElementById('auth-form');
 
-        let isLogin = true;
+  let isLogin = true;
 
-        toggleAuth.addEventListener('click', () => {
-            isLogin = !isLogin;
-            if(isLogin){
-                authTitle.textContent = "Login";
-                authBtn.textContent = "Login";
-                toggleAuth.textContent = "Don't have an account? Sign Up";
-            } else {
-                authTitle.textContent = "Sign Up";
-                authBtn.textContent = "Sign Up";
-                toggleAuth.textContent = "Already have an account? Login";
-            }
-        });
+  toggleAuth.addEventListener('click', () => {
+      isLogin = !isLogin;
+      if(isLogin){
+          authTitle.textContent = "Login";
+          authBtn.textContent = "Login";
+          toggleAuth.textContent = "Don't have an account? Sign Up";
+      } else {
+          authTitle.textContent = "Sign Up";
+          authBtn.textContent = "Sign Up";
+          toggleAuth.textContent = "Already have an account? Login";
+      }
+  });
 
-        authForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert(isLogin ? "Logging in with Email..." : "Signing up with Email...");
-            authForm.reset();
-        });
+  document.getElementById('google-login').addEventListener('click', () => {
+      alert("Login with Google clicked!");
+  });
 
-        document.getElementById('google-login').addEventListener('click', () => {
-            alert("Login with Google clicked!");
-        });
+  document.getElementById('github-login').addEventListener('click', () => {
+      alert("Login with GitHub clicked!");
+  });
 
-        document.getElementById('github-login').addEventListener('click', () => {
-            alert("Login with GitHub clicked!");
-        });
+  // ========================================
+  // Realistic Dummy Login System
+  // ========================================
+  document.addEventListener("DOMContentLoaded", () => {
+
+  // 🧾 Dummy student data
+  const USERS = [
+    {
+      email: "anant@geca.ac.in",
+      password: "12345",
+      name: "Anant Joshi",
+      branch: "Computer Science & Engineering",
+      year: "2nd Year",
+      semester: "3rd",
+      rollno: "BT24F05F068",
+      mobile: "+91-9876543210"
+    },
+    {
+      email: "pankaj@geca.ac.in",
+      password: "12345",
+      name: "Pankaj Karpe",
+      branch: "Computer Science & Engineering",
+      year: "2nd Year",
+      semester: "3rd",
+      rollno: "BT24F05F069",
+      mobile: "+91-9123456780"
+    },
+    {
+      email: "yash@geca.ac.in",
+      password: "12345",
+      name: "Yash Rajput",
+      branch: "Computer Science & Engineering",
+      year: "2nd Year",
+      semester: "3rd",
+      rollno: "BT24F05F050",
+      mobile: "+91-9123456780"
+    },
+    {
+      email: "sarthak@geca.ac.in",
+      password: "12345",
+      name: "Sarthak Thakare",
+      branch: "Computer Science & Engineering",
+      year: "2nd Year",
+      semester: "3rd",
+      rollno: "BT24F05F061",
+      mobile: "+91-9123456780"
+    }
+  ];
+
+  const authForm = document.getElementById("auth-form");
+
+  authForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    // ✅ Find the matching user
+    const user = USERS.find(u => u.email === email && u.password === password);
+
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+      alert("✅ Login successful!");
+      window.location.href = "/index.html";
+    } else {
+      alert("❌ Invalid credentials! Try again.");
+    }
+  });
+});
     </script>
 </body>
 </html>

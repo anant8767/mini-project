@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placements - COMPSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --light: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+        }
+
+        .bg-animation canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        header.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-bar {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-size: 0.85rem;
+        }
+
+        .top-bar a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .top-bar a:hover {
+            color: var(--primary);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            margin-top: 200px;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 20px 80px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15), transparent 70%);
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 80px 20px;
+            margin: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            color: var(--gray);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Recruiters Grid */
+        .recruiters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .recruiter-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+        }
+
+        .recruiter-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .recruiter-logo {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 35px;
+            top: 80px;
+            width: 2px;
+            height: calc(100% - 40px);
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-content {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+        }
+
+        .step-content:hover {
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .step-content p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Success Stories */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .story-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .story-header1 {
+            background-image: url(/plac1.png);
+            background-size: cover;
+            height: 40%;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .story-header2 {
+            background-image: url(/plac1.png);
+            background-size: cover;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .story-header {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .story-avatar {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .story-header h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .story-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .story-content {
+            padding: 30px;
+        }
+
+        .story-company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+        }
+
+        .story-company i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .story-company div h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .story-company div p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .story-text {
+            color: var(--gray);
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        /* Contact Officer */
+        .officer-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .officer-avatar {
+            width: 150px;
+            height: 150px;
+            background-image: url(/officer.png);
+            background-size: cover;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            flex-shrink: 0;
+        }
+
+        .officer-info {
+            flex: 1;
+        }
+
+        .officer-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .officer-info .role {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--gray);
+        }
+
+        .contact-item i {
+            width: 30px;
+            color: var(--primary);
+        }
+
+        /* Downloads */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .download-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .download-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .download-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .download-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .download-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 60px 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cards-grid,
+            .recruiters-grid,
+            .stories-grid,
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .officer-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+
+            .step {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .step:not(:last-child)::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <canvas id="bgCanvas"></canvas>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div>
+                    <i class="fas fa-phone"></i> +91-240-1234567 | 
+                    <i class="fas fa-envelope"></i> cse@geca.ac.in
+                </div>
+                <div>
+                    <a href="#"><i class="fas fa-user"></i> Login</a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="placements.html" class="active">Placement</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Placement Cell</h1>
+            <p>Building bridges between talent and opportunity, shaping the tech leaders of tomorrow</p>
+        </div>
+    </section>
+
+    <!-- Placement Cell Introduction -->
+    <section id="about-placement">
+        <div class="container">
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Our Mission</h3>
+                    <p>To facilitate quality placements for every student by providing comprehensive training, industry exposure, and connecting them with top recruiters across the globe.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Our Vision</h3>
+                    <p>To be recognized as a premier placement cell that consistently produces industry-ready professionals who excel in their chosen careers and contribute to technological advancement.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Our Achievements</h3>
+                    <p>Consistent 95%+ placement record with highest package of ₹45 LPA and average package of ₹8.5 LPA. Students placed in Google, Microsoft, Amazon, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <div class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>90%</h3>
+                    <p>Placement Rate</p>
+                </div>
+                <div class="stat-item">
+                    <h3>₹11L</h3>
+                    <p>Highest Package</p>
+                </div>
+                <div class="stat-item">
+                    <h3>₹6L</h3>
+                    <p>Average Package</p>
+                </div>
+                <div class="stat-item">
+                    <h3>30+</h3>
+                    <p>Recruiters</p>
+                </div>
+                <div class="stat-item">
+                    <h3>200+</h3>
+                    <p>Students Placed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Recruiters -->
+    <section id="recruiters">
+        <div class="container">
+            <h2 class="section-title">Our Top Recruiters</h2>
+            <p class="section-subtitle">Leading companies trust our talent</p>
+            <div class="recruiters-grid">
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">TCS Digital</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">IBM </div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">ZOHO</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Infosys</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Yardi Systems</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Wipro</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Prototech Solutions</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Findability sciences</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">LoanFron</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Sarvaha Systems</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Centiro</div>
+                </div>
+                <div class="recruiter-card">
+                    <div class="recruiter-logo">Prorigo Software</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placement Process -->
+    <section id="process">
+        <div class="container">
+            <h2 class="section-title">Placement Process</h2>
+            <p class="section-subtitle">Your journey from student to professional</p>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Eligibility and Registration</h3>
+                        <p>Eligibility: Students become eligible for placement in their final year (usually the 8th semester).
+                        <br>
+                        Registration: Students must register with the Training & Placement (T&P) Cell to participate in the placement drives. </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Preparation and Training</h3>
+                        <p>Skill Development: The college emphasizes skill-based learning and provides training to improve student employability.
+                        <br>
+                        Soft Skills: Students are encouraged to participate in soft skill training programs with 100% attendance, with the college planning to offer 60 hours of training.
+                        <br>
+                        Academic Record: Maintaining a good academic record is crucial, as most companies do not allow students with live backlogs to appear for placements. </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Recruitment Process</h3>
+                        <p>Company Visits: The T&P cell invites various core and non-core companies to participate in the placement drives.
+                        <br>
+                        Recruitment Drives: Companies conduct their selection processes, which may include aptitude tests, technical interviews, and other rounds.
+                        <br>
+                        Final Selection: The final selection is based on a combination of the student's skills and their performance in the selection rounds. </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Key aspects and tips for students</h3>
+                        <p>Start early: Begin building your skills and resume from your second year.
+                        <br>
+                        Focus on both academics and skills: Maintain a strong academic record while actively participating in skill-based training and activities.
+                        <br>
+                        Attend T&P cell activities: Regularly attend seminars and sessions organized by the T&P cell to stay informed and prepared.
+                        <br>
+                        Consider internships: Take advantage of internship opportunities, as they can sometimes lead to a Pre-Placement Offer (PPO). </p>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Training Programs -->
+    <section id="training">
+        <div class="container">
+            <h2 class="section-title">Training Programs</h2>
+            <p class="section-subtitle">Preparing you for success</p>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Aptitude Training</h3>
+                    <p>Comprehensive training in quantitative aptitude, logical reasoning, verbal ability, and data interpretation. Regular tests to track progress and improvement.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Technical Training</h3>
+                    <p>In-depth sessions on data structures, algorithms, system design, database management, and programming languages. Hands-on coding practice and problem-solving.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Soft Skills Development</h3>
+                    <p>Communication skills, presentation techniques, email etiquette, and professional behavior training. Building confidence for interviews and workplace success.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-users"></i></div>
+                    <h3>Group Discussion Training</h3>
+                    <p>Practice sessions on various topics, learning to articulate thoughts clearly, listen actively, and lead discussions effectively in team settings.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Mock Interviews</h3>
+                    <p>Simulated interview experiences with industry professionals and faculty. Detailed feedback on technical knowledge, communication, and body language.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>Resume Building</h3>
+                    <p>Workshops on creating impactful resumes and cover letters. One-on-one sessions to optimize your profile and highlight achievements effectively.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section id="success-stories">
+        <div class="container">
+            <h2 class="section-title">Success Stories</h2>
+            <p class="section-subtitle">Meet our achievers who made it big</p>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <div class="story-header1">
+                    </div>
+                    <div class="story-content">
+                        <h3>Akshay Kawadase</h3>
+                        <p>B.Tech CSE 2024</p>
+                        <div class="story-company">
+                            <i class="fas fa-building"></i>
+                            <div>
+                                <h4>Amazon (Off-Campus)</h4>
+                                <p>Software Engineer • ₹46 LPA</p>
+                            </div>
+                        </div>
+                        <p class="story-text">
+                            "The rigorous training and supportive environment at COMPSA gave me the confidence to crack Google's interview. The placement cell's guidance was invaluable throughout my journey."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">SK</div>
+                        <h3>Shravani Nachiket Kulkarni</h3>
+                        <p>B.Tech CSE 2024</p>
+                    </div>
+                    <div class="story-content">
+                        <div class="story-company">
+                            <i class="fas fa-building"></i>
+                            <div>
+                                <h4>PGS</h4>
+                                <p>SDE I • ₹8 LPA</p>
+                            </div>
+                        </div>
+                        <p class="story-text">
+                            "The department's focus on practical learning and problem-solving helped me excel in Amazon's rigorous selection process. The placement cell was incredibly supportive."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="story-avatar">AS</div>
+                        <h3>Aryan Virendra Shinde</h3>
+                        <p>B.Tech CSE 2024</p>
+                    </div>
+                    <div class="story-content">
+                        <div class="story-company">
+                            <i class="fas fa-building"></i>
+                            <div>
+                                <h4>...</h4>
+                                <p>SDE I • ₹7.5 LPA</p>
+                            </div>
+                        </div>
+                        <p class="story-text">
+                            "The department's focus on practical learning and problem-solving helped me excel in Amazon's rigorous selection process. The placement cell was incredibly supportive."
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Placement Officer -->
+    <section id="contact-officer">
+        <div class="container">
+            <h2 class="section-title">Meet Our Placement Officer</h2>
+            <p class="section-subtitle">Connect with us for all placement-related queries</p>
+            <div class="officer-card">
+                <div class="officer-avatar">
+                </div>
+                <div class="officer-info">
+                    <h3>Dr. A. M. Nikalje</h3>
+                    <p class="role">Training and Placement Officer</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>tpo@geca.ac.in</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91-240-2366357</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>+91-9876543210</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Office Hours: Monday to Friday, 9:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Placement Cell, CSE Department, Ground Floor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads -->
+    <section id="downloads">
+        <div class="container">
+            <h2 class="section-title">Downloads</h2>
+            <p class="section-subtitle">Important documents and resources</p>
+            <div class="downloads-grid">
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>Placement Brochure</h3>
+                    <p>Comprehensive overview of our department, programs, and placement statistics</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Placement Policy</h3>
+                    <p>Rules and regulations governing the placement process and student eligibility</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Company Visit Form</h3>
+                    <p>Form for companies interested in recruiting from our department</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Placement Calendar</h3>
+                    <p>Schedule of upcoming recruitment drives and placement activities</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#about">About Department</a></li>
+                        <li><a href="#programs">Academic Programs</a></li>
+                        <li><a href="#faculty">Faculty</a></li>
+                        <li><a href="#research">Research</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Placements</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about-placement">About Placement Cell</a></li>
+                        <li><a href="#recruiters">Our Recruiters</a></li>
+                        <li><a href="#process">Placement Process</a></li>
+                        <li><a href="#training">Training Programs</a></li>
+                        <li><a href="#success-stories">Success Stories</a></li>
+                        <li><a href="#downloads">Downloads</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Library</a></li>
+                        <li><a href="#">Labs</a></li>
+                        <li><a href="#">Research Papers</a></li>
+                        <li><a href="students.html">Student Portal</a></li>
+                        <li><a href="#">Past Recruiters</a></li>
+                        <li><a href="#">Alumni</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect With Us</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;">Stay connected through our social channels</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 COMPSA - Government College of Engineering, Aurangabad. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animated Background Canvas (Same as main site)
+        const bgCanvas = document.getElementById('bgCanvas');
+        const ctx = bgCanvas.getContext('2d');
+        
+        bgCanvas.width = window.innerWidth;
+        bgCanvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * bgCanvas.width;
+                this.y = Math.random() * bgCanvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > bgCanvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > bgCanvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(99, 102, 241, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.2 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .recruiter-card, .step-content, .story-card, .download-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const number = target.querySelector('h3');
+                    const text = number.textContent;
+                    
+                    // Extract number from text
+                    let value = parseInt(text.replace(/[^0-9]/g, ''));
+                    let current = 0;
+                    const increment = value / 50;
+                    const hasPercent = text.includes('%');
+                    const hasPlus = text.includes('+');
+                    const hasRupee = text.includes('₹');
+                    const hasL = text.includes('L');
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= value) {
+                            let finalText = value.toString();
+                            if (hasRupee) finalText = '₹' + finalText;
+                            if (hasL) finalText += 'L';
+                            if (hasPlus) finalText += '+';
+                            if (hasPercent) finalText += '%';
+                            number.textContent = finalText;
+                            clearInterval(timer);
+                        } else {
+                            let displayText = Math.floor(current).toString();
+                            if (hasRupee) displayText = '₹' + displayText;
+                            if (hasL) displayText += 'L';
+                            if (hasPlus) displayText += '+';
+                            if (hasPercent) displayText += '%';
+                            number.textContent = displayText;
+                        }
+                    }, 30);
+                    statObserver.unobserve(target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(stat => {
+            statObserver.observe(stat);
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'rgba(15, 23, 42, 0.98)';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderTop = '1px solid rgba(255, 255, 255, 0.1)';
+            });
+
+            
+        }
+    </script>
+
+    
+</body>
+</html>
