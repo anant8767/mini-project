@@ -746,6 +746,66 @@
                 display: none;
             }
         }
+
+        :root{
+}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,#071018 0%, #041018 100%);color:#e8f1f5}
+
+
+.wrap{
+margin-top: 50px;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:48px;
+}
+
+
+.card{
+width:100%;max-width:1200px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+border-radius:var(--radius);padding:20px;box-shadow:0 6px 30px rgba(2,6,10,0.7);
+backdrop-filter: blur(var(--glass-blur));border:1px solid var(--glass-border);
+}
+
+
+header{display:flex;align-items:center;gap:16px;justify-content:space-between;margin-bottom:12px}
+header h1{font-size:18px;margin:0;font-weight:600;letter-spacing:0.2px}
+header p{margin:0;color:var(--muted);font-size:13px}
+
+
+.controls{display:flex;gap:12px;align-items:center}
+.search{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:inherit}
+
+
+.table-wrap{overflow:auto;border-radius:12px;margin-top:12px}
+table{width:100%;border-collapse:collapse;min-width:760px}
+thead th{position:sticky;top:0;background:linear-gradient(180deg, rgba(3,6,10,0.6), rgba(3,6,10,0.45));text-align:left;padding:12px;font-size:13px;color:#cfeffb}
+tbody tr{border-bottom:1px solid rgba(255,255,255,0.03)}
+td{padding:12px;font-size:14px;color:#e6faff}
+
+
+.no-wrap{white-space:nowrap}
+
+
+/* translucent row highlight */
+tbody tr:hover{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(100,210,255,0.02));}
+
+
+.badge{display:inline-block;padding:6px 9px;border-radius:999px;font-size:13px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);}
+
+
+/* package color scale */
+.pkg-high{background:linear-gradient(90deg, rgba(88,214,141,0.08), rgba(88,214,141,0.02));color:#bff8dc}
+.pkg-mid{background:linear-gradient(90deg, rgba(255,193,7,0.06), rgba(255,193,7,0.02));color:#fff1c9}
+.pkg-low{background:linear-gradient(90deg, rgba(255,99,99,0.06), rgba(255,99,99,0.02));color:#ffdede}
+
+
+/* responsive */
+@media (max-width:880px){
+header{flex-direction:column;align-items:flex-start}
+.controls{width:100%}
+table{min-width:720px}
+}
     </style>
 </head>
 <body>
@@ -834,6 +894,68 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="wrap">
+<h1>Placement / Company Table</h1>
+</div>
+<div class="controls">
+<input id="q" class="search" placeholder="Search by name, company or package" oninput="filterTable()" />
+</div>
+</header>
+
+
+    <div class="table-wrap">
+    <table id="data-table" aria-describedby="placement-list">
+    <thead>
+    <tr>
+    <th style="width:56px">#</th>
+    <th>Name</th>
+    <th>Company</th>
+    <th style="width:120px">Package (LPA)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Rows generated from provided data -->
+    <tr><td class="no-wrap">1</td><td>SHARVANI NACHIKET KULKARNI</td><td>PGS</td><td class="pkg-high">8</td></tr>
+    <tr><td class="no-wrap">2</td><td>AKSHAY SURENDRA KAWADSE</td><td>SARVAHA SYSTEM</td><td class="pkg-mid">7.5</td></tr>
+    <tr><td class="no-wrap">3</td><td>ARYAN VIRENDRA SHENDE</td><td>SARVAHA SYSTEM</td><td class="pkg-low">7</td></tr>
+    <tr><td class="no-wrap">4</td><td>SANCHI VIJAY RAMPURKAR</td><td>endrsathauser infoserve</td><td class="pkg-mid">7.5</td></tr>
+    <tr><td class="no-wrap">5</td><td>SANKET SAPATE</td><td>Pratiti</td><td class="pkg-low">6.02</td></tr>
+    <tr><td class="no-wrap">6</td><td>VAISHNAVI BALASAHEB GHUMARE</td><td>Pratiti</td><td class="pkg-low">6.02</td></tr>
+    <tr><td class="no-wrap">7</td><td>SAGAR RAVIKANT MADANKAR</td><td>Pratiti</td><td class="pkg-low">6.02</td></tr>
+    <tr><td class="no-wrap">8</td><td>SUBHASH SANTOSH MOTE</td><td>Pratiti</td><td class="pkg-low">6.02</td></tr>
+    <tr><td class="no-wrap">9</td><td>ADITYA VISHNU SHINDE</td><td>Findability sciences</td><td class="pkg-high">6</td></tr>
+    <tr><td class="no-wrap">10</td><td>MINAL SANJAY SAINDANE</td><td>Yandi</td><td class="pkg-high">55</td></tr>
+    <tr><td class="no-wrap">11</td><td>ABHILASHA RAVINDRA AHER</td><td>Yardi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">12</td><td>CHETAN SUDHAKAR BANDURKAR</td><td>Yardi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">13</td><td>HARSHADA SANTOSH BOKAN</td><td>Centiro</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">14</td><td>CHAVHAN NEEL NEVIDAS</td><td>Yaedi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">15</td><td>VISHAL BALIRAM GADEKAR</td><td>Yardi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">16</td><td>PRAVIN DIPAK JADHAO</td><td>Centiro</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">17</td><td>HARSH ASHOK JADHAV</td><td>Yardi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">18</td><td>STAVAN KAPGATE</td><td>Yardi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">19</td><td>YASH SAHEBRAO NIMBURKAR</td><td>Yardi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">20</td><td>SUYASH NITINKUMAR PANDE</td><td>Centiro</td><td class="pkg-high">55</td></tr>
+    <tr><td class="no-wrap">21</td><td>SANKET SANTOSH PATIL</td><td>Yardi</td><td class="pkg-mid">5.5</td></tr>
+    <tr><td class="no-wrap">22</td><td>YUVRAJ SANDIP PISE</td><td>Yandi</td><td class="pkg-low">4.8</td></tr>
+    <tr><td class="no-wrap">23</td><td>ALAN PHILIP SAI</td><td>Cestiro</td><td class="pkg-low">4.3</td></tr>
+    <tr><td class="no-wrap">24</td><td>MOHD TEHAMI SHAIKH</td><td>Yardi</td><td>5.5</td></tr>
+    <tr><td class="no-wrap">25</td><td>RUSHABH SANTOSH SHRISHRIMAL</td><td>Prototech Solutions</td><td>5.5</td></tr>
+    <tr><td class="no-wrap">26</td><td>TILAK RAVIKIRAN VARMA</td><td>Loan Front</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">27</td><td>RIDDHI SANJAY VERNEKAR</td><td>LunFront</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">28</td><td>JITENDRA VINOD JAISWAL</td><td>IBM</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">29</td><td>PRATHMESH DEEPAK RANE</td><td>Prurigo</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">30</td><td>RAM MAHESH GAIKWAD</td><td>Prurigo</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">31</td><td>YOGESH SUNIL BANGAR</td><td>Prurigo</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">32</td><td>KUNAL MADHAV SONAWANE</td><td>Prurigo</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">33</td><td>MANSI RAVINDRA KHOD</td><td>Prurigo</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">34</td><td>KHUSHI RAJENDRA BANGADE</td><td>Prurigo</td><td>4.3</td></tr>
+    <tr><td class="no-wrap">35</td><td>VIKRAM MOHANRAV</td><td>Prurigo</td><td>4.3</td></tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
     </div>
 
     <!-- Top Recruiters -->
@@ -1368,6 +1490,15 @@
 
             
         }
+
+        function textOf(row){return row.innerText.toLowerCase();}
+function filterTable(){
+const q = document.getElementById('q').value.toLowerCase().trim();
+const rows = document.querySelectorAll('#data-table tbody tr');
+rows.forEach(r=>{
+r.style.display = q === '' ? '' : (textOf(r).includes(q) ? '' : 'none');
+});
+}
     </script>
 
     
